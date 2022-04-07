@@ -9,6 +9,7 @@ import java.util.logging.LogManager;
 import java.util.logging.Logger;
 import java.util.logging.XMLFormatter;
 
+import logs.FiltroSoloMultiplicaciones;
 import logs.FormatoHTML;
 import menu.Menu;
 import operaciones.Operaciones;
@@ -52,13 +53,15 @@ private static final Logger LOGGER = Logger.getLogger(Calculadora.class.getName(
             } else {
                 System.out.println ("Operación no válida");
             }
-            LOGGER.log(Level.FINE, "Operacion: " + operacion + " | Operando 1 : " + operandos[0] + " | Operando 2 : " + operandos[1] +  " | el resultado: "+resultado );
+            LOGGER.log(Level.FINE,  operacion +" "+ operandos[0] +" "+  operandos[1] +" "+resultado );
         }catch(ArithmeticException e){
         System.out.println("Operacion aritmetica no valida: " + e.getMessage());
         LOGGER.log(Level.WARNING, "Division entre cero.", e);
         }
         } while (menu.repetir());
         }
+    //return "<HTML> \n <head> \n <link rel=\"stylesheet\"  href=\"style.css\"></head> <BODY> \n <table> \n <tr> \n <th>Operacion:</th> \n <th> Operando 1 :</th> \n <th>Operando 2 : </th> \n <th>+  el resultado: </th> \n </tr> \n </table>  \n";
+
     public static  void configurarLog() {
     LOGGER.setUseParentHandlers(false);
    
@@ -66,9 +69,10 @@ private static final Logger LOGGER = Logger.getLogger(Calculadora.class.getName(
           Handler fileHandler  =  null;
          
           LOGGER.addHandler(consoleHandler);
+          LOGGER.setFilter(new FiltroSoloMultiplicaciones());
          
           try{
-              fileHandler= new FileHandler("./LOGS/logOperaciones.html", true);
+              fileHandler= new FileHandler("./LOGS/logOperaciones.html");
              //fileHandler= new FileHandler("./LOGS/operaciones.log");
           }
           catch(IOException exception){
