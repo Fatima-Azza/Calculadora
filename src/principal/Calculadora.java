@@ -1,5 +1,6 @@
 package principal;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.FileHandler;
@@ -9,7 +10,9 @@ import java.util.logging.LogManager;
 import java.util.logging.Logger;
 import java.util.logging.XMLFormatter;
 
+import logs.ConfigurarLogsFichero;
 import logs.FiltroSoloMultiplicaciones;
+import logs.FiltroSoloResultadoNulo;
 import logs.FormatoHTML;
 import menu.Menu;
 import operaciones.Operaciones;
@@ -19,8 +22,24 @@ import operaciones.Operaciones;
  *
  */
 public class Calculadora{
+	private static final LogManager logManager = LogManager.getLogManager();
 private static final Logger LOGGER = Logger.getLogger(Calculadora.class.getName());
-    public static void main(String[] args) {  
+   
+static {
+
+	try {
+
+		logManager.readConfiguration(new FileInputStream("./LOGS/configLognulo.properties"));
+
+	}
+
+	catch (IOException exception) {
+
+		LOGGER.log(Level.SEVERE, "Error al cargar la configuracion.", exception);
+	}
+}
+
+public static void main(String[] args) {  
     configurarLog();
         int resultado = 0;
         String operacion = "";
@@ -69,10 +88,12 @@ private static final Logger LOGGER = Logger.getLogger(Calculadora.class.getName(
           Handler fileHandler  =  null;
          
           LOGGER.addHandler(consoleHandler);
-          LOGGER.setFilter(new FiltroSoloMultiplicaciones());
-         
+          
+          //LOGGER.setFilter(new FiltroSoloMultiplicaciones());
+         LOGGER.setFilter(new FiltroSoloResultadoNulo());
           try{
-              fileHandler= new FileHandler("./LOGS/logOperaciones.html");
+              //fileHandler= new FileHandler("./LOGS/logOperaciones.html");
+           fileHandler= new FileHandler("./LOGS/ResultadosNulos.html");
              //fileHandler= new FileHandler("./LOGS/operaciones.log");
           }
           catch(IOException exception){
@@ -82,14 +103,15 @@ private static final Logger LOGGER = Logger.getLogger(Calculadora.class.getName(
          
           fileHandler.setFormatter(new FormatoHTML());
          
-          LOGGER.addHandler(fileHandler);
+         LOGGER.addHandler(fileHandler);
          
          
          
           consoleHandler.setLevel(Level.WARNING);
-          fileHandler.setLevel(Level.FINE);
+         fileHandler.setLevel(Level.FINE);
          
           LOGGER.setLevel(Level.FINE);
     }
+
 }
 
