@@ -40,7 +40,7 @@ static {
 }
 
 public static void main(String[] args) {  
-    configurarLog();
+    //configurarLog();
         int resultado = 0;
         String operacion = "";
         int[] operandos = new int [2];
@@ -81,7 +81,7 @@ public static void main(String[] args) {
         }
     //return "<HTML> \n <head> \n <link rel=\"stylesheet\"  href=\"style.css\"></head> <BODY> \n <table> \n <tr> \n <th>Operacion:</th> \n <th> Operando 1 :</th> \n <th>Operando 2 : </th> \n <th>+  el resultado: </th> \n </tr> \n </table>  \n";
 
-    public static  void configurarLog() {
+  /*  public static  void configurarLog() {
     LOGGER.setUseParentHandlers(false);
    
      Handler consoleHandler = new ConsoleHandler();
@@ -112,6 +112,6 @@ public static void main(String[] args) {
          
           LOGGER.setLevel(Level.FINE);
     }
-
+*/
 }
 

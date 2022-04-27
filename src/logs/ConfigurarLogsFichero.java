@@ -12,7 +12,7 @@ public class ConfigurarLogsFichero {
     private static final Logger LOGGER = Logger.getLogger("confLogger");
     static{
         try {
-            logManager.readConfiguration(new FileInputStream("./LOGS/configLognulo.properties"));
+            logManager.readConfiguration(new FileInputStream("./LOGS/configLog.properties"));
         } catch (IOException exception) {
             LOGGER.log(Level.SEVERE, "Error al cargar la configuración",exception);
         }
